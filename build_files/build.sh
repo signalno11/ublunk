@@ -59,9 +59,9 @@ dnf5 -y config-manager addrepo --from-repofile=https://brave-browser-rpm-release
 dnf -y install brave-origin
 
 # Dev packages
-dnf -y group install development-tools
-dnf -y install vim-enhanced neovim git clang gcc zsh
-dnf5 --from-repo=terra -y ghostty
+dnf5 -y group install development-tools
+dnf5 -y install vim-enhanced neovim git clang gcc zsh
+dnf5 -y install --from-repo=terra ghostty
 
 # Steam and Lutris
 RUN curl -fsSL \
