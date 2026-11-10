@@ -73,18 +73,6 @@ curl -fsSL \
 
 
 # Selective Finalize Steps from Bazzite
-
-# -- Patch steam desktop entry --
-# Redirect steam.desktop to use bazzite-steam wrapper.
-echo "==> Patching steam desktop entry..."
-sed -i \
-    's@/usr/bin/steam@/usr/bin/bazzite-steam@g' \
-    /usr/share/applications/steam.desktop
-
-sed -i \
-    's@Exec=steam steam://open/bigpicture@Exec=/usr/bin/bazzite-steam-bpm@g' \
-    /usr/share/applications/steam.desktop
-
 # -- Patch grub2-mkconfig --
 # Fix grub_probe path for chroot compatibility.
 echo "==> Patching grub2-mkconfig..."
@@ -93,24 +81,6 @@ echo "==> Patching grub2-mkconfig..."
 sed -i \
     's|grub_probe\} --target=device /`|grub_probe} --target=device /sysroot`|g' \
     /usr/bin/grub2-mkconfig
-
-# -- Patch tuned profiles --
-echo "==> Patching tuned profiles..."
-sed -i \
-    's/power-saver=powersave$/power-saver=powersave-bazzite/' \
-    /etc/tuned/ppd.conf
-
-sed -i \
-    's/balanced=balanced$/balanced=balanced-bazzite/' \
-    /etc/tuned/ppd.conf
-
-sed -i \
-    's/performance=throughput-performance$/performance=throughput-performance-bazzite/' \
-    /etc/tuned/ppd.conf
-
-sed -i \
-    's/balanced=balanced-battery$/balanced=balanced-battery-bazzite\npower-saver=powersave-battery-bazzite/' \
-    /etc/tuned/ppd.conf
 
 # -- Configure Flatpak --
 echo "==> Configuring Flatpak..."
