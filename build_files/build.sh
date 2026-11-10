@@ -18,7 +18,7 @@ dnf5 -y install niri niri-settings
 # dnf5 -y copr enable duxlabs/dms
 # Install Dux dependencies
 dnf5 -y install quickshell
-dnf5 -y qt6-qtmultimedia accountsservice qt6ct greetd
+dnf5 -y install qt6-qtmultimedia accountsservice qt6ct greetd
 dnf5 -y install cava firacode-fonts rsms-inter-fonts material-symbols-fonts
 # Explicitly install desired Dux components
 dnf5 -y install dux-gop dux-search dux-search dux-calendar matugen dux-greeter
@@ -26,7 +26,7 @@ dnf5 -y install dux-gop dux-search dux-search dux-calendar matugen dux-greeter
 dnf5 -y install dms
 
 # Install Dolphin
-dnf5 -y dolphin
+dnf5 -y install dolphin
 
 # Install QWERTY-fr
 dnf5 -y copr enable emixampp/qwerty-fr
