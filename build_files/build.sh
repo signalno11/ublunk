@@ -64,7 +64,7 @@ dnf5 -y install vim-enhanced neovim git clang gcc zsh
 dnf5 -y install --from-repo=terra ghostty
 
 # Steam and Lutris
-RUN curl -fsSL \
+curl -fsSL \
     https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite/08-install-steam-lutris.sh \
     -o /tmp/08-install-steam-lutris.sh \
     && bash /tmp/08-install-steam-lutris.sh \
