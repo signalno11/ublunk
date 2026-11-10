@@ -43,7 +43,7 @@ dnf5 config-manager setopt '*terra*.skip_if_unavailable=False'
 
 
 # Valve patched packages
-RUN curl -fsSL \
+curl -fsSL \
     https://raw.githubusercontent.com/ublue-os/bazzite/main/build_files/bazzite/05-valve-patches.sh \
     -o /tmp/05-valve-patches.sh \
     && bash /tmp/05-valve-patches.sh \
