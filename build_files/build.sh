@@ -70,6 +70,12 @@ curl -fsSL \
     && bash /tmp/08-install-steam-lutris.sh \
     && rm /tmp/08-install-steam-lutris.sh
 
+# Brew
+curl -fsSL \
+    https://raw.githubusercontent.com/ublue-os/bazzite/908870373ffbf3a590edca261691012872d4b652/build_files/bazzite/01-copy-brew-files.sh \
+    -o /tmp/01-copy-brew-files.sh \
+    && bash /tmp/01-copy-brew-files.sh \
+    && rm /tmp/01-copy-brew-files.sh
 
 
 # Selective Finalize Steps from Bazzite

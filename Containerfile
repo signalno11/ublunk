@@ -37,6 +37,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=bind,from=nvidia-akmods,source=/rpms,target=/tmp/akmods-rpms \
+    --mount=type=bind,from=brew,source=/system_files,target=/tmp/brew_files \
     /ctx/build.sh
 
 ### LINTING
