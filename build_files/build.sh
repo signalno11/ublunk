@@ -74,12 +74,6 @@ curl -fsSL \
 
 # Selective Finalize Steps from Bazzite
 
-# -- Copy libdrm symlinks --
-# Preserve libdrm symlinks for compatibility.
-echo "==> Configuring libdrm symlinks..."
-cp --no-dereference --preserve=links /usr/lib/libdrm.so.2 /usr/lib/libdrm.so
-cp --no-dereference --preserve=links /usr/lib64/libdrm.so.2 /usr/lib64/libdrm.so
-
 # -- Patch steam desktop entry --
 # Redirect steam.desktop to use bazzite-steam wrapper.
 echo "==> Patching steam desktop entry..."
