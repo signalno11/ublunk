@@ -4,7 +4,9 @@ COPY build_files /
 COPY system_files /system_files
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable
+FROM ghcr.io/ublue-os/akmods-nvidia-open:main-45 AS nvidia-akmods
+FROM ghcr.io/ublue-os/brew:latest AS brew
+FROM ghcr.io/ublue-os/base-main:latest
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:testing
 # FROM ghcr.io/ublue-os/aurora:stable
@@ -34,6 +36,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
+    --mount=type=bind,from=nvidia-akmods,source=/rpms,target=/tmp/akmods-rpms \
     /ctx/build.sh
 
 ### LINTING
