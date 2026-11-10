@@ -95,7 +95,25 @@ curl --fail --retry 3 --retry-all-errors -Lo /etc/flatpak/remotes.d/flathub.flat
 /usr/bin/systemctl preset brew-update.timer && \
 /usr/bin/systemctl preset brew-upgrade.timer
 
-IMAGE_NAME=main /tmp/akmods-rpms/ublue-os/nvidia-install.sh
+curl -fsSL \
+    https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite-nvidia/01-remove-nvidia-conflicts.sh \
+    -o /tmp/01-remove-nvidia-conflicts.sh \
+    && bash /tmp/01-remove-nvidia-conflicts.sh \
+    && rm /tmp/01-remove-nvidia-conflicts.sh
+
+curl -fsSL \
+    https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite-nvidia/02-install-nvidia-driver.sh \
+    -o /tmp/02-install-nvidia-driver.sh \
+    && sed -i '/Waydroid/Id' /tmp/02-install-nvidia-driver.sh
+    && bash /tmp/02-install-nvidia-driver.sh \
+    && rm /tmp/02-install-nvidia-driver.sh
+
+curl -fsSL \
+    https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite-nvidia/03-finalize.sh \
+    -o /tmp/03-finalize.sh \
+    && sed -i '/justfile/Id' /tmp/03-finalize.sh
+    && bash /tmp/03-finalize.sh \
+    && rm /tmp/03-finalize.sh
 
 KERNEL_VERSION="$(rpm -q --queryformat='%{VERSION}-%{RELEASE}.%{ARCH}' kernel-core)"
 export DRACUT_NO_XATTR=1
