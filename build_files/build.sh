@@ -104,14 +104,14 @@ curl -fsSL \
 curl -fsSL \
     https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite-nvidia/02-install-nvidia-driver.sh \
     -o /tmp/02-install-nvidia-driver.sh \
-    && sed -i '/Waydroid/Id' /tmp/02-install-nvidia-driver.sh
+    && sed -i '/Waydroid/Id' /tmp/02-install-nvidia-driver.sh \
     && bash /tmp/02-install-nvidia-driver.sh \
     && rm /tmp/02-install-nvidia-driver.sh
 
 curl -fsSL \
     https://raw.githubusercontent.com/ublue-os/bazzite/refs/heads/main/build_files/bazzite-nvidia/03-finalize.sh \
     -o /tmp/03-finalize.sh \
-    && sed -i '/justfile/Id' /tmp/03-finalize.sh
+    && sed -i '/justfile/Id' /tmp/03-finalize.sh \
     && bash /tmp/03-finalize.sh \
     && rm /tmp/03-finalize.sh
 
