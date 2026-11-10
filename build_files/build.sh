@@ -15,7 +15,7 @@ cp -avf "/ctx/system_files"/. /
 # Install Niri
 dnf5 -y install niri niri-settings
 # Enable Dux repo
-# dnf5 -y copr enable duxlabs/dms
+dnf5 -y copr enable duxlabs/dms
 # Install Dux dependencies
 dnf5 -y install quickshell
 dnf5 -y install qt6-qtmultimedia accountsservice qt6ct greetd
