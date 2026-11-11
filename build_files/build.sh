@@ -159,8 +159,8 @@ if [ "${VARIANT}" = default ]; then
 fi
 
 dnf5 -y copr disable duxlabs/dms
-dnf5 -y config-manager setopt terra.enabled=0
 if [ "${VARIANT}" = default ]; then
+    dnf5 -y config-manager setopt terra.enabled=0
     dnf5 -y copr disable emixampp/qwerty-fr
     dnf5 -y config-manager setopt brave-browser.enabled=0
 elif [ "${VARIANT}" = moon ]; then
