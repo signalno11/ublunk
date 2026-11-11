@@ -15,8 +15,6 @@ cp -avf "/ctx/system_files"/. /
 # Install Niri
 if [ "${VARIANT}" = default ]; then
     dnf5 -y install niri niri-settings
-elif [ "${VARIANT}" = moon ]; then
-    dnf5 -y install labwc labwc-tweaks labwc-session pam
 fi
 # Enable Dux repo
 dnf5 -y copr enable duxlabs/dms
@@ -42,20 +40,23 @@ dnf5 -y install mako bemenu cliphist wev xsettingsd hdparm lsscsi lm_sensors i2c
 if [ "${VARIANT}" = moon ]; then
     dnf5 -y install htop dotnet-sdk-10.0 yq podman-compose
 fi
-    # Add Terra repo (code from Bazzite repo)
-    dnf5 -y install \
-        --nogpgcheck \
-        --setopt=terra.skip_if_unavailable=False \
-        --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
-        terra-release{,-extras,-mesa}
-    dnf5 config-manager setopt '*terra*.skip_if_unavailable=False'
+# Add Terra repo (code from Bazzite repo)
+dnf5 -y install \
+    --nogpgcheck \
+    --setopt=terra.skip_if_unavailable=False \
+    --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
+    terra-release{,-extras,-mesa}
+dnf5 config-manager setopt '*terra*.skip_if_unavailable=False'
+if [ "${VARIANT}" = moon ]; then
+    dnf5 -y install mangowm
+fi
 
-    # Valve patched packages
-    curl -fsSL \
-        https://raw.githubusercontent.com/ublue-os/bazzite/main/build_files/bazzite/05-valve-patches.sh \
-        -o /tmp/05-valve-patches.sh \
-        && bash /tmp/05-valve-patches.sh \
-        && rm /tmp/05-valve-patches.sh
+# Valve patched packages
+curl -fsSL \
+    https://raw.githubusercontent.com/ublue-os/bazzite/main/build_files/bazzite/05-valve-patches.sh \
+    -o /tmp/05-valve-patches.sh \
+    && bash /tmp/05-valve-patches.sh \
+    && rm /tmp/05-valve-patches.sh
 
 
 # Remove default packages
