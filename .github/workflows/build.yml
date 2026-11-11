@@ -24,6 +24,20 @@ jobs:
   build_push:
     name: Build and push image
     runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image_name: ublunk
+            variant: default
+          - image_name: ublunk-moon
+            variant: moon
+      concurrency:
+        group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ matrix.image_name }}
+        cancel-in-progress: true
+      env:
+        IMAGE_NAME: ${{ matrix.image_name }}
+        VARIANT: ${{ matrix.variant }}
 
     permissions:
       contents: read

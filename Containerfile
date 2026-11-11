@@ -1,12 +1,21 @@
+ARG VARIANT=default
+
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
 COPY system_files /system_files
 
+FROM ghcr.io/ublue-os/akmods-nvidia-open:main-45 AS nvidia-akmods-default
+
+FROM scratch AS nvidia-akmods-moon
+COPY --from=ctx /empty /rpms/.empty
+
 # Base Image
-FROM ghcr.io/ublue-os/akmods-nvidia-open:main-45 AS nvidia-akmods
+FROM nvidia-akmods-${VARIANT} AS nvidia-akmods
 FROM ghcr.io/ublue-os/brew:latest AS brew
 FROM ghcr.io/ublue-os/base-main:latest
+
+ARG VARIANT=default
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:testing
 # FROM ghcr.io/ublue-os/aurora:stable
