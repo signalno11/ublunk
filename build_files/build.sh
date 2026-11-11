@@ -84,16 +84,8 @@ fi
 # Used as vague reference: https://github.com/irunatbullets/spacium/blob/main/build_files/build.sh
 systemctl --global enable dms
 systemctl enable greetd
+# Not really sure why this is needed but shrug
 mkdir -p /var/cache/dms-greeter
-
-tee /usr/lib/sysusers.d/greeter.conf > /dev/null <<'EOF'
-g greeter 767
-u greeter 767 "greetd greeter" /var/lib/greeter
-EOF
-
-mkdir -p /var/lib/greeter
-chown 767:767 /var/lib/greeter
-
 
 # Steam and Lutris
 curl -fsSL \
@@ -162,6 +154,7 @@ if [ "${VARIANT}" = default ]; then
     dnf5 -y config-manager setopt brave-browser.enabled=0
 elif [ "${VARIANT}" = moon ]; then
     dnf5 -y config-manager setopt librewolf.enabled=0
+fi
 
 if [ "${VARIANT}" = default ]; then
     KERNEL_VERSION="$(rpm -q --queryformat='%{VERSION}-%{RELEASE}.%{ARCH}' kernel-core)"
