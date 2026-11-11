@@ -42,21 +42,23 @@ dnf5 -y install mako bemenu cliphist wev xsettingsd hdparm lsscsi lm_sensors i2c
 if [ "${VARIANT}" = moon ]; then
     dnf5 -y install htop dotnet-sdk-10.0 yq podman-compose
 fi
-# Add Terra repo (code from Bazzite repo)
-dnf5 -y install \
-    --nogpgcheck \
-    --setopt=terra.skip_if_unavailable=False \
-    --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
-    terra-release{,-extras,-mesa}
-dnf5 config-manager setopt '*terra*.skip_if_unavailable=False'
-
-
-# Valve patched packages
-curl -fsSL \
-    https://raw.githubusercontent.com/ublue-os/bazzite/main/build_files/bazzite/05-valve-patches.sh \
-    -o /tmp/05-valve-patches.sh \
-    && bash /tmp/05-valve-patches.sh \
-    && rm /tmp/05-valve-patches.sh
+if [ "${VARIANT}" = default ]; then
+    # Add Terra repo (code from Bazzite repo)
+    dnf5 -y install \
+        --nogpgcheck \
+        --setopt=terra.skip_if_unavailable=False \
+        --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' \
+        terra-release{,-extras,-mesa}
+    dnf5 config-manager setopt '*terra*.skip_if_unavailable=False'
+fi
+if [ "${VARIANT}" = default ]; then
+    # Valve patched packages
+    curl -fsSL \
+        https://raw.githubusercontent.com/ublue-os/bazzite/main/build_files/bazzite/05-valve-patches.sh \
+        -o /tmp/05-valve-patches.sh \
+        && bash /tmp/05-valve-patches.sh \
+        && rm /tmp/05-valve-patches.sh
+fi
 
 # Remove default packages
 dnf5 -y remove firefox toolbox
@@ -81,19 +83,19 @@ elif [ "${VARIANT}" = moon ]; then
     dnf5 -y install konsole
 fi
 
-# Used as vague reference: https://github.com/irunatbullets/spacium/blob/main/build_files/build.sh
-systemctl --global enable dms
-systemctl enable greetd
-
-mkdir -p /var/cache/dms-greeter
-
-tee /usr/lib/sysusers.d/greeter.conf > /dev/null <<'EOF'
-g greeter 767
-u greeter 767 "greetd greeter" /var/lib/greeter
-EOF
-
-mkdir -p /var/lib/greeter
-chown 767:767 /var/lib/greeter
+# # Used as vague reference: https://github.com/irunatbullets/spacium/blob/main/build_files/build.sh
+# systemctl --global enable dms
+# systemctl enable greetd
+#
+# mkdir -p /var/cache/dms-greeter
+#
+# tee /usr/lib/sysusers.d/greeter.conf > /dev/null <<'EOF'
+# g greeter 767
+# u greeter 767 "greetd greeter" /var/lib/greeter
+# EOF
+#
+# mkdir -p /var/lib/greeter
+# chown 767:767 /var/lib/greeter
 
 
 # Steam and Lutris
