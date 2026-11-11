@@ -32,8 +32,9 @@ dnf5 -y install dolphin
 dnf5 -y copr enable emixampp/qwerty-fr
 dnf5 -y install qwerty-fr
 
-# Add Terra repo (code from Bazzite repo)
+dnf5 -y install mako bemenu cliphist wev xsettingsd hdparm lsscsi lm_sensors i2c-tools tuned tuned-profiles-atomic tuned-gtk bolt btop htop fastfetch inxi glances ncdu duf plocate pv ripgrep fd-find bat unar parallel
 
+# Add Terra repo (code from Bazzite repo)
 dnf5 -y install \
     --nogpgcheck \
     --setopt=terra.skip_if_unavailable=False \
@@ -62,6 +63,20 @@ dnf -y install brave-origin
 dnf5 -y group install development-tools
 dnf5 -y install vim-enhanced neovim git clang gcc zsh
 dnf5 -y install --from-repo=terra ghostty
+
+# Used as vague reference: https://github.com/irunatbullets/spacium/blob/main/build_files/build.sh
+systemctl --global enable dms
+systemctl enable greetd
+mkdir -p /var/cache/dms-greeter
+
+tee /usr/lib/sysusers.d/greeter.conf > /dev/null <<'EOF'
+g greeter 767
+u greeter 767 "greetd greeter" /var/lib/greeter
+EOF
+
+mkdir -p /var/lib/greeter
+chown 767:767 /var/lib/greeter
+
 
 # Steam and Lutris
 curl -fsSL \
@@ -120,6 +135,11 @@ curl -fsSL \
     && sed -i '/justfile/Id' /tmp/03-finalize.sh \
     && bash /tmp/03-finalize.sh \
     && rm /tmp/03-finalize.sh
+
+dnf5 -y copr disable duxlabs/dms
+dnf5 -y copr disable emixampp/qwerty-fr
+dnf5 -y config-manager setopt brave-browser.enabled=0
+dnf5 -y config-managet setopt terra.enabled=0
 
 KERNEL_VERSION="$(rpm -q --queryformat='%{VERSION}-%{RELEASE}.%{ARCH}' kernel-core)"
 export DRACUT_NO_XATTR=1
