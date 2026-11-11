@@ -32,12 +32,12 @@ jobs:
             variant: default
           - image_name: ublunk-moon
             variant: moon
-      concurrency:
-        group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ matrix.image_name }}
-        cancel-in-progress: true
-      env:
-        IMAGE_NAME: ${{ matrix.image_name }}
-        VARIANT: ${{ matrix.variant }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ matrix.image_name }}
+      cancel-in-progress: true
+    env:
+      IMAGE_NAME: ${{ matrix.image_name }}
+      VARIANT: ${{ matrix.variant }}
 
     permissions:
       contents: read
