@@ -16,7 +16,7 @@ cp -avf "/ctx/system_files"/. /
 if [ "${VARIANT}" = default ]; then
     dnf5 -y install niri niri-settings
 elif [ "${VARIANT}" = moon ]; then
-    dnf5 -y install labwc
+    dnf5 -y install labwc labwc-tweaks pam
 fi
 # Enable Dux repo
 dnf5 -y copr enable duxlabs/dms
@@ -84,8 +84,17 @@ fi
 # Used as vague reference: https://github.com/irunatbullets/spacium/blob/main/build_files/build.sh
 systemctl --global enable dms
 systemctl enable greetd
-# Not really sure why this is needed but shrug
+
 mkdir -p /var/cache/dms-greeter
+
+tee /usr/lib/sysusers.d/greeter.conf > /dev/null <<'EOF'
+g greeter 767
+u greeter 767 "greetd greeter" /var/lib/greeter
+EOF
+
+mkdir -p /var/lib/greeter
+chown 767:767 /var/lib/greeter
+
 
 # Steam and Lutris
 curl -fsSL \
