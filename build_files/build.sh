@@ -18,10 +18,11 @@ dnf5 -y install niri niri-settings
 dnf5 -y copr enable duxlabs/dms
 # Install Dux dependencies
 dnf5 -y install quickshell
-dnf5 -y install qt6-qtmultimedia accountsservice qt6ct greetd
+dnf5 -y plasma-login-manager kcm-plasmalogin kf6-kcmutils
+dnf5 -y install qt6-qtmultimedia accountsservice qt6ct
 dnf5 -y install cava fira-code-fonts rsms-inter-fonts material-symbols-fonts
 # Explicitly install desired Dux components
-dnf5 -y install dux-gop dux-search dux-search dux-calendar matugen dux-greeter
+dnf5 -y install dux-gop dux-search dux-search dux-calendar matugen
 # Install Dux
 dnf5 -y install dms
 
